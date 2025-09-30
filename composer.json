@@ -1,0 +1,14 @@
+{
+  "name": "dockcodes/a11y-checker",
+  "description": "PHP client for accessibility audit API",
+  "type": "library",
+  "require": {
+    "php": ">=8.0",
+    "guzzlehttp/guzzle": "^7.0|^8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Dock\\A11yChecker\\": "src/"
+    }
+  }
+}
