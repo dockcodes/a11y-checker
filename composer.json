@@ -2,6 +2,13 @@
   "name": "dockcodes/a11y-checker",
   "description": "PHP client for accessibility audit API",
   "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "email": "j.labudda@dock.codes",
+      "name": "Jacek Labudda"
+    }
+  ],
   "require": {
     "php": ">=8.0",
     "guzzlehttp/guzzle": "^7.0|^8.0"
