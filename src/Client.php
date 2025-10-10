@@ -94,6 +94,7 @@ class Client
         if ($this->apiKey) {
             $params['key'] = $this->apiKey;
         }
+        $params['t'] = intdiv(time(), 10);
         $query = http_build_query(array_filter($params));
         $response = $this->http->get("api/$endpoint?$query");
         return json_decode($response->getBody()->getContents(), true) ?: [];
