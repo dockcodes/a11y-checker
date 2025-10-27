@@ -38,10 +38,20 @@ print_r($history);
 
 ### Method parameters
 ```php
-scan(string $url, Language $lang = Language::EN, Device $device = Device::DESKTOP, bool $sync = false, bool $extraData = false)
+scan(string $url, Language $lang = Language::EN, Device $device = Device::DESKTOP, bool $sync = false, bool $extraData = false, ?string $uniqueKey = null)
+
+rescan(string $uuid, Language $lang = Language::EN, bool $sync = false, bool $extraData = false)
+
+audits(string $search, int $page = 1, int $perPage = 10, Sort $sort = Sort::LAST_AUDIT_DESC, ?string $uniqueKey = null)
 
 audit(string $uuid, Language $lang = Language::EN, bool $extraData = false)
 
+deleteAudit(string $uuid)
+
 history(string $uuid, int $page = 1, int $perPage = 10, Sort $sort = Sort::CREATED_AT_ASC)
+
+deleteHistory(string $uuid)
+
+updateAuditManual(string $uuid, string $criterionId, AuditStatus $status, Device $device));
 ```
 To obtain an API key, please contact us via the [contact form](https://wcag.dock.codes/contact-us/).
