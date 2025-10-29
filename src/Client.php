@@ -181,15 +181,20 @@ class Client
      * @return array
      * @throws GuzzleException
      */
-    private function request(string $endpoint, array $params = [], array $headers = [], string $method = 'get'): array
+    protected function request(string $endpoint, array $params = [], array $headers = [], string $method = 'get', bool $sendBody = false): array
     {
         if ($this->apiKey) {
             $params['key'] = $this->apiKey;
         }
         $params['t'] = intdiv(time(), 10);
-        $query = http_build_query(array_filter($params));
         try {
-            $response = $this->http->$method("api/$endpoint?$query", ['headers' => $headers]);
+            $endpoint = ltrim($endpoint, '/');
+            if ($sendBody) {
+                $response = $this->http->$method("api/$endpoint", ['headers' => $headers, 'form_params' => $params]);
+            } else {
+                $query = http_build_query(array_filter($params));
+                $response = $this->http->$method("api/$endpoint?$query", ['headers' => $headers]);
+            }
             $status = $response->getStatusCode();
             $body = json_decode($response->getBody()->getContents(), true) ?: [];
         } catch (RequestException $e) {
