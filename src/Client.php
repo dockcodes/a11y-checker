@@ -129,6 +129,16 @@ class Client
     }
 
     /**
+     * Get current user data
+     * @return array
+     * @throws GuzzleException
+     */
+    public function user(): array
+    {
+        return $this->request("user");
+    }
+
+    /**
      * Delete audit
      * @param string $uuid
      * @return array
@@ -174,10 +184,28 @@ class Client
     }
 
     /**
+     * Update history
+     * @param string $uuid
+     * @param bool|null $monitoring
+     * @param bool|null $notifications
+     * @return array
+     */
+    public function historyUpdate(string $uuid, ?bool $monitoring = null, ?bool $notifications = null): array
+    {
+        $params = [
+            'uuid' => $uuid,
+        ];
+        if (!is_null($monitoring)) $params['monitoring'] = $monitoring;
+        if (!is_null($notifications)) $params['notifications'] = $notifications;
+        return $this->request("history/update", $params, method: 'post');
+    }
+
+    /**
      * @param string $endpoint
      * @param array $params
      * @param array $headers
      * @param string $method
+     * @param bool $sendBody
      * @return array
      * @throws GuzzleException
      */

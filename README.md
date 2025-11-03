@@ -46,9 +46,13 @@ audits(string $search, int $page = 1, int $perPage = 10, Sort $sort = Sort::LAST
 
 audit(string $uuid, Language $lang = Language::EN, bool $extraData = false)
 
+user()
+
 deleteAudit(string $uuid)
 
 history(string $uuid, int $page = 1, int $perPage = 10, Sort $sort = Sort::CREATED_AT_ASC)
+
+historyUpdate(string $uuid, ?bool $monitoring = null, ?bool $notifications = null)
 
 deleteHistory(string $uuid)
 
