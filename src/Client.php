@@ -180,7 +180,7 @@ class Client
             'criterion_id' => $criterionId,
             'status' => $status,
             'device' => $device,
-        ], method: 'post');
+        ], ["Content-Type" => "application/json"], 'post');
     }
 
     /**
@@ -197,7 +197,7 @@ class Client
         ];
         if (!is_null($monitoring)) $params['monitoring'] = $monitoring;
         if (!is_null($notifications)) $params['notifications'] = $notifications;
-        return $this->request("history/update", $params, method: 'post');
+        return $this->request("history/update", $params, ["Content-Type" => "application/json"], 'post');
     }
 
     /**
@@ -209,7 +209,7 @@ class Client
      * @return array
      * @throws GuzzleException
      */
-    protected function request(string $endpoint, array $params = [], array $headers = [], string $method = 'get', bool $sendBody = false): array
+    protected function request(string $endpoint, array $params = [], array $headers = [], string $method = 'get'): array
     {
         if ($this->apiKey) {
             $params['key'] = $this->apiKey;
@@ -217,8 +217,8 @@ class Client
         $params['t'] = intdiv(time(), 10);
         try {
             $endpoint = ltrim($endpoint, '/');
-            if ($sendBody) {
-                $response = $this->http->$method("api/$endpoint", ['headers' => $headers, 'form_params' => $params]);
+            if ($method === 'post') {
+                $response = $this->http->post("api/$endpoint", ['headers' => $headers, 'form_params' => $params]);
             } else {
                 $query = http_build_query(array_filter($params));
                 $response = $this->http->$method("api/$endpoint?$query", ['headers' => $headers]);
