@@ -52,8 +52,6 @@ deleteAudit(string $uuid)
 
 history(string $uuid, int $page = 1, int $perPage = 10, Sort $sort = Sort::CREATED_AT_ASC)
 
-historyUpdate(string $uuid, ?bool $monitoring = null, ?bool $notifications = null)
-
 deleteHistory(string $uuid)
 
 updateAuditManual(string $uuid, string $criterionId, AuditStatus $status, Device $device));

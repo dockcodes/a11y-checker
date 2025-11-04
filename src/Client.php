@@ -184,23 +184,6 @@ class Client
     }
 
     /**
-     * Update history
-     * @param string $uuid
-     * @param bool|null $monitoring
-     * @param bool|null $notifications
-     * @return array
-     */
-    public function historyUpdate(string $uuid, ?bool $monitoring = null, ?bool $notifications = null): array
-    {
-        $params = [
-            'uuid' => $uuid,
-        ];
-        if (!is_null($monitoring)) $params['monitoring'] = $monitoring;
-        if (!is_null($notifications)) $params['notifications'] = $notifications;
-        return $this->request("history/update", $params, method: 'post');
-    }
-
-    /**
      * @param string $endpoint
      * @param array $params
      * @param array $headers
@@ -221,6 +204,11 @@ class Client
             $endpoint = ltrim($endpoint, '/');
             if ($method === 'post') {
                 $dataType = str_contains($endpoint, 'token') ? 'form_params' : 'json';
+                if ($dataType === 'json') {
+                    if (empty($headers['Content-Type'])) {
+                        $headers['Content-Type'] = 'application/json';
+                    }
+                }
                 $response = $this->http->post("api/$endpoint", ['headers' => $headers, $dataType => $params]);
             } else {
                 $query = http_build_query(array_filter($params));
