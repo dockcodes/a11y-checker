@@ -180,7 +180,7 @@ class Client
             'criterion_id' => $criterionId,
             'status' => $status,
             'device' => $device,
-        ], ["Content-Type" => "application/json"], 'post');
+        ], method: 'post');
     }
 
     /**
@@ -197,7 +197,7 @@ class Client
         ];
         if (!is_null($monitoring)) $params['monitoring'] = $monitoring;
         if (!is_null($notifications)) $params['notifications'] = $notifications;
-        return $this->request("history/update", $params, ["Content-Type" => "application/json"], 'post');
+        return $this->request("history/update", $params, method: 'post');
     }
 
     /**
@@ -205,7 +205,6 @@ class Client
      * @param array $params
      * @param array $headers
      * @param string $method
-     * @param bool $sendBody
      * @return array
      * @throws GuzzleException
      */
@@ -215,10 +214,14 @@ class Client
             $params['key'] = $this->apiKey;
         }
         $params['t'] = intdiv(time(), 10);
+        if (empty($headers['Accept'])) {
+            $headers['Accept'] = 'application/json';
+        }
         try {
             $endpoint = ltrim($endpoint, '/');
             if ($method === 'post') {
-                $response = $this->http->post("api/$endpoint", ['headers' => $headers, 'form_params' => $params]);
+                $dataType = str_contains($endpoint, 'token') ? 'form_params' : 'json';
+                $response = $this->http->post("api/$endpoint", ['headers' => $headers, $dataType => $params]);
             } else {
                 $query = http_build_query(array_filter($params));
                 $response = $this->http->$method("api/$endpoint?$query", ['headers' => $headers]);
