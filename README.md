@@ -18,21 +18,21 @@ composer require dockcodes/a11y-checker
 <?php
 require 'vendor/autoload.php';
 
-use Dock\A11yChecker\Client;
+use Dock\A11yChecker\Client as A11yCheckerClient;
 
-$client = new Client('[API KEY]');
+$guest = new A11yCheckerClient();
 
 // Run scan
-$result = $client->scan('https://example.com');
+$result = $guest->scan('https://example.com');
 echo "Audit uuid: " . $result['uuid'] . "\n";
 echo "Address uuid: " . $result['address_uuid'] . "\n";
 
 // Get audit result
-$report = $client->audit($result['uuid']);
+$report = $guest->audit($result['uuid']);
 print_r($report);
 
 // Get history
-$history = $client->history($result['address_uuid']);
+$history = $guest->history($result['address_uuid']);
 print_r($history);
 ```
 
@@ -56,4 +56,8 @@ deleteHistory(string $uuid)
 
 updateAuditManual(string $uuid, string $criterionId, AuditStatus $status, Device $device));
 ```
-To obtain an API key, please contact us via the [contact form](https://wcag.dock.codes/contact-us/).
+### 🔑 Get Your API Key
+
+You can test as a guest, request an API key, or test the service directly on the website:
+
+👉 https://wcag.dock.codes/contact-us/

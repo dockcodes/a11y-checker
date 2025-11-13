@@ -6,4 +6,5 @@ enum Language: string
 {
     case PL = 'pl';
     case EN = 'en';
+    case DE = 'de';
 }
