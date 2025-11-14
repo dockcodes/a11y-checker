@@ -2,10 +2,12 @@
 
 namespace Dock\A11yChecker;
 
+use DateTimeInterface;
 use Dock\A11yChecker\Enums\AuditStatus;
 use Dock\A11yChecker\Enums\Device;
 use Dock\A11yChecker\Enums\Language;
 use Dock\A11yChecker\Enums\Sort;
+use Dock\A11yChecker\Dtos\HistoryFilters;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
@@ -115,17 +117,27 @@ class Client
      * @param int $page
      * @param int $perPage
      * @param Sort $sort
+     * @param ?HistoryFilters $filters
      * @return array
      * @throws GuzzleException
      */
-    public function history(string $uuid, int $page = 1, int $perPage = 10, Sort $sort = Sort::CREATED_AT_ASC): array
+    public function history(string $uuid, int $page = 1, int $perPage = 10, Sort $sort = Sort::CREATED_AT_ASC, ?HistoryFilters $filters = null): array
     {
-        return $this->request("history", [
+        $params = [
             'uuid' => $uuid,
             'page' => $page,
             'per_page' => $perPage,
             'sort' => $sort,
-        ]);
+        ];
+        if ($filters) {
+            if ($filters->date_from) {
+                $params['date_from'] = $filters->date_from instanceof \DateTime ? $filters->date_from->format(DateTimeInterface::ATOM) : $filters->date_from;
+            }
+            if ($filters->date_to) {
+                $params['date_to'] = $filters->date_to instanceof \DateTime ? $filters->date_to->format(DateTimeInterface::ATOM) : $filters->date_to;
+            }
+        }
+        return $this->request("history", $params);
     }
 
     /**
