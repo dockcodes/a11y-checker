@@ -50,11 +50,11 @@ user()
 
 deleteAudit(string $uuid)
 
-history(string $uuid, int $page = 1, int $perPage = 10, Sort $sort = Sort::CREATED_AT_ASC)
+history(string $uuid, int $page = 1, int $perPage = 10, Sort $sort = Sort::CREATED_AT_ASC, HistoryFilters::from(date_from: '01-01-2000'))
 
 deleteHistory(string $uuid)
 
-updateAuditManual(string $uuid, string $criterionId, AuditStatus $status, Device $device));
+updateAuditManual(string $uuid, string $criterionId, AuditStatus $status, Device $device);
 ```
 ### 🔑 Get Your API Key
 
