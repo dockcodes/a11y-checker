@@ -31,16 +31,21 @@ class HistoryFilters extends BaseDto
             "Y-m-d H:i:s\Z",
             "Y-m-d\TH:i",
             "Y-m-d H:i",
+            "Y-m-d H:i:s",
             "Y-m-d",
             "d.m.Y",
             "d.m.Y\TH:i",
             "d.m.Y H:i",
+            "d.m.Y H:i:s",
             "d-m-Y",
             "d-m-Y\TH:i",
+            "d-m-Y\TH:i:s",
             "d-m-Y H:i",
+            "d-m-Y H:i:s",
             "d/m/Y",
             "d/m/Y\TH:i",
             "d/m/Y H:i",
+            "d/m/Y H:i:s",
         ];
 
         foreach ($formats as $fmt) {

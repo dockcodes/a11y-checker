@@ -8,10 +8,8 @@ abstract class BaseDto
     {
         $instance = new static();
 
-        if (count($params) === 1 && is_array($params[0])) {
-            $params = $params[0];
-        } else {
-            $params = $params;
+        if (key_exists(0, $params)) {
+            $params = reset($params);
         }
 
         foreach ($params as $key => $value) {
